@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" metadata-complete="true" version="3.0">
+  <servlet>
+    <servlet-name>HomeServlet</servlet-name>
+    <servlet-class>HomeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HomeServlet</servlet-name>
+    <url-pattern>/HomeServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>RegisterServlet</servlet-name>
+    <servlet-class>RegisterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegisterServlet</servlet-name>
+    <url-pattern>/RegisterServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>LoginFailure</servlet-name>
+    <servlet-class>LoginFailure</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginFailure</servlet-name>
+    <url-pattern>/LoginFailure</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>courseListServlet</servlet-name>
+    <servlet-class>courseListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>courseListServlet</servlet-name>
+    <url-pattern>/courseListServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>HelloForm</servlet-name>
+    <servlet-class>HelloForm</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HelloForm</servlet-name>
+    <url-pattern>/HelloForm</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>myAccountServlet</servlet-name>
+    <servlet-class>myAccountServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>myAccountServlet</servlet-name>
+    <url-pattern>/myAccountServlet</url-pattern>
+  </servlet-mapping>
+  
+  
+</web-app>

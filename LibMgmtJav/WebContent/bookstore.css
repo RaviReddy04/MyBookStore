@@ -1,0 +1,35 @@
+
+body{
+	
+	background : url("https://images.unsplash.com/photo-1477238134895-98438ad85c30?dpr=1&auto=compress,format&fit=crop&w=376&h=251&q=80&cs=tinysrgb&crop=");
+	background-size: cover;
+	background-position: center;	
+}
+
+h1{
+	font-size: 5em;
+	font-weight: 700;
+}
+
+html{
+	height: 100%;
+}
+
+#content{
+	color: white;
+	text-align: center;
+	padding-top: 25%;
+	text-shadow: 4px 4px 3px black;
+
+}
+
+
+var moonPhase ='full';
+if(moonPhase==='mostly full'){
+  console.log('Arms and legs are getting haririer');
+}else if(moonPhase==='mostly new'){
+  console.log('Back on two feet');
+}else {
+  console.log('Invalid moon phase');
+}
+

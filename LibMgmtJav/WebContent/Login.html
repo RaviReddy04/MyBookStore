@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" type="text/css" href="bootstrap.css">
+<link rel="stylesheet" type="text/css" href="bookstore.css">
+<link rel="stylesheet" type="text/css"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><i class="fa fa-book"
+					aria-hidden="true"></i> My Book Tracker</a>
+			</div>
+
+
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="#"><i class="fa fa-pencil-square"
+							aria-hidden="true"></i> About Us<span class="sr-only">(current)</span></a></li>
+					<li><a href="#"><i class="fa fa-phone-square"
+							aria-hidden="true"></i> Contact</a></li>
+				</ul>
+
+
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="RegisterServlet"><i class="fa fa-user-plus"
+							aria-hidden="true"></i> Sign Up</a></li>
+					<li><a href="Login.html"><i class="fa fa-sign-in"
+							aria-hidden="true"></i> Login In</a></li>
+				</ul>
+
+			</div>
+
+		</div>
+
+	</nav>
+
+
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div id="content">
+					<h1>My Book Tracker</h1>
+					<h3>The School Book Store</h3>
+					<hr>
+					<form action="HomeServlet" method="get">
+						<div class="form-group">
+							<label for="collegeID">College ID</label> <input name='collegeID'
+								type="text" class="form-control" 
+								placeholder="College ID" required/>
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">Password</label> <input
+								name="Password" type="password" class="form-control"
+								 placeholder="Password" required/>
+						</div>
+						<div class="form-group">
+							<div class='form-group'>
+
+								<div class='form-inline'>
+									<label> Role??? </label><br> <label for='student'>
+										Student </label> <input id='student' name='role' type='radio'
+										class='form-control' value='student' /> &emsp;
+									<label for='instructor'> Instructor </label> <input name='role'
+										id='instructor' type='radio' class='form-control'
+										value='instructor' /> &emsp; <label for='Admin'>
+										Admin </label> <input name='role' id='Admin' type='radio'
+										class='form-control' value='Admin' />
+										
+										
+								</div>
+								<button type="submit" class="btn btn-default">Submit</button>
+								
+							</div>
+						</div>
+
+						
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.1.1.js"
+		integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+		crossorigin="anonymous"></script>
+	<script src="/LibMgmtJav/WebContent/bootstrap.min.js"></script>
+</body>
+</html>

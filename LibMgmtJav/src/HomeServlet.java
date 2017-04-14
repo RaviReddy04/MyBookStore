@@ -35,6 +35,15 @@ public class HomeServlet extends HttpServlet {
 		
 		User u = MySQLDataStoreUtilities.getSignInDetails(collegeId);
 		//System.out.println(u.getFirstname());
+		
+		
+		
+		int count=MySQLDataStoreUtilities.getEnrollCount(collegeId);
+		System.out.println(count);
+		
+		
+		
+		
 	if(collegeId!=null && password!=null && role!=null){
 		 if(collegeId.equals(u.getCollegeid())&& password.equals(u.getPassword())&& role.equals(u.getRole())){
 				 
@@ -121,7 +130,7 @@ public class HomeServlet extends HttpServlet {
 				
 				
 				out.println("<div class='list-group'>");
-				out.println("<a href=''#' class='list-group-item active'>");
+				out.println("<a href='MyCoursesServlet' class='list-group-item active'>");
 				out.println("<h4 class='list-group-item-heading'>My Courses</h4>");
 				out.println("<p class='list-group-item-text'>List All the coursesi am Enrolled in</p>");
 				out.println("</a>");

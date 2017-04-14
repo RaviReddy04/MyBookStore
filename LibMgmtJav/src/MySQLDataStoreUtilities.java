@@ -26,7 +26,7 @@ public class MySQLDataStoreUtilities {
 
 	}
 
-	public static void insertSignINDetails(String collegeID,String firstName, String lastName,  String email,
+	public static void insertSignINDetails(String collegeID, String firstName, String lastName, String email,
 			String gender, String dOB, String address, String password, String role) {
 
 		System.out.println(firstName + lastName + collegeID + email + gender + dOB + address + password + role);
@@ -67,8 +67,112 @@ public class MySQLDataStoreUtilities {
 			e.printStackTrace();
 		}
 	}
+
+	
+	public static int getEnrollCount(String collegeID) {
+
+		int count=0;
+		try {
+			Connection connect = MySQLDataStoreUtilities.getConnection();
+			String userQuery = "SELECT * FROM enrollmentData WHERE collegeID=?;";
+			PreparedStatement pst = connect.prepareStatement(userQuery);
+			pst.setString(1, collegeID);
+			ResultSet resultSet = pst.executeQuery();
+			
+			while (resultSet.next()) {
+				++count;
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();// TODO: handle exception
+		}
+		return count;
+	}
 	
 	
+	
+	
+	
+	public static Enroll getEnrollDetails(String collegeID) {
+		Enroll u = new Enroll();
+		try {
+			Connection connect = MySQLDataStoreUtilities.getConnection();
+			String userQuery = "SELECT  collegeID,courseId,courseName  FROM enrollmentData WHERE collegeID=?;";
+			PreparedStatement pst = connect.prepareStatement(userQuery);
+			pst.setString(1, collegeID);
+			ResultSet resultSet = pst.executeQuery();
+			while (resultSet.next()) {
+				u.setCollegeID(collegeID);
+				u.setCourseId(resultSet.getString("courseId"));
+				u.setCourseName(resultSet.getString("courseName"));
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();// TODO: handle exception
+		}
+		return u;
+	}
+
+	public static void updateEnrollDetails(String collegeID) {
+
+		try {
+
+			Connection connection = MySQLDataStoreUtilities.getConnection();
+			String getProductsQuery = "delete from enrollmentData where collegeID=?;";
+			PreparedStatement pst = connection.prepareStatement(getProductsQuery);
+			pst.setString(1, collegeID);
+			pst.execute();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static courseList getCourseDetails(String courseId) {
+		courseList u = new courseList();
+		try {
+			Connection connect = MySQLDataStoreUtilities.getConnection();
+			String userQuery = "SELECT  courseID,courseName FROM courseListTable WHERE courseID=?;";
+			PreparedStatement pst = connect.prepareStatement(userQuery);
+			pst.setString(1, courseId);
+			ResultSet resultSet = pst.executeQuery();
+			while (resultSet.next()) {
+				u.setCourseId(courseId);
+				u.setCourseName(resultSet.getString("courseName"));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();// TODO: handle exception
+		}
+		return u;
+	}
+	
+	
+	public static List<Enroll> enrollCourseListFetch(String collegeID) {
+		List<Enroll> mylist = new ArrayList<>();
+
+		try {
+
+			Connection connect = MySQLDataStoreUtilities.getConnection();
+			String getUsersQuery = "SELECT courseId,courseName FROM enrollmentData where collegeID=?;";
+			PreparedStatement pst = connect.prepareStatement(getUsersQuery);
+			pst.setString(1, collegeID);
+			ResultSet resultSet = pst.executeQuery();
+			while (resultSet.next()) {
+				Enroll c = new Enroll();
+				c.setCollegeID(collegeID);
+				c.setCourseId(resultSet.getString("courseId"));
+				c.setCourseName(resultSet.getString("courseName"));
+				mylist.add(c);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();// TODO: handle exception
+		}
+
+		return mylist;
+
+	}
 	
 	
 
@@ -78,7 +182,7 @@ public class MySQLDataStoreUtilities {
 			Connection connect = MySQLDataStoreUtilities.getConnection();
 			String userQuery = "SELECT  collegeID,firstName,lastName ,email,gender,DOB, address, password , role  FROM userData WHERE collegeID=?;";
 			PreparedStatement pst = connect.prepareStatement(userQuery);
-			pst.setString(1,collegeID);
+			pst.setString(1, collegeID);
 			ResultSet resultSet = pst.executeQuery();
 			while (resultSet.next()) {
 				u.setCollegeid(collegeID);
@@ -96,12 +200,12 @@ public class MySQLDataStoreUtilities {
 		}
 		return u;
 	}
-	
-	public static void updateSignInDetails(String collegeID,String firstName, String lastName,  String email,
+
+	public static void updateSignInDetails(String collegeID, String firstName, String lastName, String email,
 			String gender, String dOB, String address, String password, String role) {
 		System.out.println(firstName + lastName + collegeID + email + gender + dOB + address + password + role);
 		try {
-			
+
 			Connection connection = MySQLDataStoreUtilities.getConnection();
 			String getProductsQuery = "update userData set firstName=?,lastName=?,email=?,gender=?,DOB=?,address=?,password=?,role=? where collegeID=?;";
 			PreparedStatement pst = connection.prepareStatement(getProductsQuery);
@@ -121,8 +225,6 @@ public class MySQLDataStoreUtilities {
 			e.printStackTrace();
 		}
 	}
-	
-	
 
 	public static List<courseList> courseListFetch() {
 		List<courseList> mylist = new ArrayList<>();
@@ -138,6 +240,8 @@ public class MySQLDataStoreUtilities {
 				courseList c = new courseList();
 				c.setCourseId(resultSet.getString("courseID"));
 				c.setCourseName(resultSet.getString("courseName"));
+				System.out.println(resultSet.getString("courseID"));
+				System.out.println(resultSet.getString("courseName"));
 				mylist.add(c);
 
 			}

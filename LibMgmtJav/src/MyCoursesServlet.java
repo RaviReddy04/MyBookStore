@@ -12,8 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.authentication.MysqlClearPasswordPlugin;
 
-@WebServlet("/courseListServlet")
-public class courseListServlet extends HttpServlet {
+@WebServlet("/MyCoursesServlet")
+public class MyCoursesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -106,28 +106,27 @@ public class courseListServlet extends HttpServlet {
 		out.println("<form method='post' action='courseListServlet''>");
 		out.println("<div class='container'>");
 		out.println("<div class='col-lg-6'>");
-		out.println("<h1><strong>Courses Offered</strong></h1>");
+		out.println("<h1><strong>Your enrolled Courses </strong></h1>");
 
 		out.println("<table class='table table-bordered'>");
 		out.println("<thead>");
 
-		out.println("<th>Enrolled</th>");
+
 		out.println("<th>Course Id</th>");
 		out.println("<th>Course Name</th>");
 		out.println("</thead>");
 
 		out.println("<tbody>");
 
-		List<courseList> mycourses = MySQLDataStoreUtilities.courseListFetch();
-		for (courseList course : mycourses) {
+		List<Enroll> mycourses = MySQLDataStoreUtilities.enrollCourseListFetch(collegeId);
+		for (Enroll course : mycourses) {
+			String collegeID= course.getCollegeID();
 			String courseid = course.getCourseId();
 			String coursename = course.getCourseName();
 
 			out.println("<tr>");
-			System.out.println(courseid+coursename);
 
-			out.println("<td><input type='checkbox' name='courseid' value='" + courseid + "'></td> ");
-			out.println("<input type='hidden' name='coursename' value='" + coursename + "'></td> ");
+
 			out.println("<td>" + course.getCourseId() + "</td>");
 			out.println("<td>" + course.getCourseName() + "</td>");
 			out.println("</tr>");
@@ -138,7 +137,7 @@ public class courseListServlet extends HttpServlet {
 
 		out.println("</table>");
 
-		out.println("<input type='submit'>");
+		
 		out.println("</div>");
 		out.println("</div>");
 
@@ -161,43 +160,6 @@ public class courseListServlet extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		HttpSession session = request.getSession();
-		PrintWriter out = response.getWriter();
-
-		String collegeId = (String) session.getAttribute("collegeId");
-		User u = MySQLDataStoreUtilities.getSignInDetails(collegeId);
-
-		session.setAttribute("collegeId", collegeId);
-
-//		BLAAAAAAAAAAAAAAAAAAAHHHHHH
-//		coursename fetch using mysqldatastore in below statement
-		String[] coursesids = request.getParameterValues("courseid");
-		
-		//String[] coursesNames = MySQLDataStoreUtilities.getCourseDetails("courseid");
-		// String[] courses= request.getParameterValues("course");
-
-		if (MySQLDataStoreUtilities.getEnrollDetails(collegeId) != null) {
-			MySQLDataStoreUtilities.updateEnrollDetails(collegeId);
-			for (int i = 0; i < coursesids.length; i++) {
-				courseList c=MySQLDataStoreUtilities.getCourseDetails(coursesids[i]);
-				System.out.println(collegeId+coursesids[i]+c.getCourseName());
-				
-				
-				MySQLDataStoreUtilities.insertsEnrolledCoursesDetails(collegeId, coursesids[i], c.getCourseName());
-			}
-			
-		} else {
-			for (int i = 0; i < coursesids.length; i++) {
-				courseList c=MySQLDataStoreUtilities.getCourseDetails(coursesids[i]);
-				System.out.println(collegeId);
-				System.out.println(coursesids[i]);
-				System.out.println(c.getCourseName());
-				MySQLDataStoreUtilities.insertsEnrolledCoursesDetails(collegeId, coursesids[i], c.getCourseName());
-			}
-		}
-
-	}
+			throws ServletException, IOException {}
 
 }

@@ -172,7 +172,7 @@ public class courseListServlet extends HttpServlet {
 		session.setAttribute("collegeId", collegeId);
 
 //		BLAAAAAAAAAAAAAAAAAAAHHHHHH
-//		coursename fetch using mysqldatastore in below statement
+
 		String[] coursesids = request.getParameterValues("courseid");
 		
 		//String[] coursesNames = MySQLDataStoreUtilities.getCourseDetails("courseid");

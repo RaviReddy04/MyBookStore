@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/bookServlet")
 public class bookServlet extends HttpServlet {
@@ -20,7 +21,14 @@ public class bookServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
+
+		String collegeId = (String) session.getAttribute("collegeId");
+		User u = MySQLDataStoreUtilities.getSignInDetails(collegeId);
+
+		session.setAttribute("collegeId", collegeId);
+
 		response.setContentType("text/html;charset=UTF-8");
 
 		out.println("<html>");
@@ -36,6 +44,7 @@ public class bookServlet extends HttpServlet {
 		out.println("</head>");
 
 		out.println("<body>");
+
 		out.println("<nav class='navbar navbar-default'>");
 		out.println("<div class='container'>");
 
@@ -68,10 +77,26 @@ public class bookServlet extends HttpServlet {
 		out.println("<i class='fa fa-phone-square' aria-hidden='true'>");
 		out.println("</i> Contact</a>");
 		out.println("</li>");
+		
+		
+		
+//		out.println("<li>");
+//		out.println("<form class='navbar-form navbar-left' name='autofillform' action='autocomplete'>");
+//		out.println("<div class='form-group'>");
+//		out.println("<input type='text' class='form-control' placeholder='Search'>");
+//		out.println("</div>");
+//		out.println("<button type='submit' class='btn btn-default'>Submit</button>");
+//		out.println("</form>");
+//		out.println("</li>");
+//		
+		
+		
 		out.println("</ul>");
 		out.println("</li>");
 		out.println("</ul>");
-
+		
+		
+		
 		out.println("<ul class='nav navbar-nav navbar-right'>");
 		out.println("<li>");
 		out.println("<a href='#'>");
@@ -92,46 +117,87 @@ public class bookServlet extends HttpServlet {
 		out.println("<!-- /.container-fluid -->");
 		out.println("</nav>");
 
-		out.println("<form method='post' action='courseListServlet''>");
+		
+		
+		
+//		out.println("<div class='container'>");
+//
+//	
+//		out.println("<ul class='nav navbar-nav navbar-right'>");
+//		out.println("<li>");
+//		
+//		out.println("</ul>");
+//		out.println("</li>");
+//		out.println("</div>");
+		
+		
+		
 		out.println("<div class='container'>");
-		out.println("<div class='col-lg-6'>");
-		out.println("<h1><strong>Courses Offered</strong></h1>");
-
-		out.println("<table class='table table-bordered'>");
-		out.println("<thead>");
-
-		out.println("<th>Enrolled</th>");
-		out.println("<th>Course Id</th>");
-		out.println("<th>Course Name</th>");
-		out.println("</thead>");
-
+		
+		
+		out.println("<form name='autofillform' action='autocomplete'>");
+		out.println("<table border='0' cellpadding='5'>");
 		out.println("<tbody>");
+		out.println("<tr>");
+		out.println(
+				"<input type='text' class='form-control' placeholder='Search'  id='complete-field' onkeyup='doCompletion()'>");
+		out.println("</td>");
+		out.println("</tr>");
+		out.println("<tr>");
+		out.println("<td id='auto-row' colspan='2'>");
 
-		List<courseList> mycourses = MySQLDataStoreUtilities.courseListFetch();
-		for (courseList course : mycourses) {
-			String courseid = course.getCourseId();
-			String coursename = course.getCourseName();
-			// System.out.println(courseid + coursename);
+		out.println("<table id='complete-table' class='popupBox' />");
+		out.println("</td>");
+		out.println("</tr>");
+		out.println("</tbody>");
+		out.println("</table>");
+		out.println("</form>");
+		out.println("<br><br><br><br><br><br>");
 
-			out.println("<tr>");
+		
+		List<products> myproducts = MySQLDataStoreUtilities.productsListFetch();
+		for (products p : myproducts) {
 
-			out.println("<td><input type='checkbox' name='courseid' value='" + courseid + "'></td> ");
-			out.println("<input type='hidden' name='coursename' value='" + coursename + "'></td> ");
-			out.println("<td>" + course.getCourseId() + "</td>");
-			out.println("<td>" + course.getCourseName() + "</td>");
-			out.println("</tr>");
+			String ASIN = p.getASIN();
+			String ISBN = p.getISBN();
+			out.println("<div class='row'>");
+
+			out.println("<div style='color:black' class='col-lg-11 col-md-4 col-sm-6'>");
+
+			out.println("<div class='thumbnail'>");
+			out.println("<img src=" + p.getImageURL() + ">");
+			out.println("<p> ASIN: " + p.getASIN() + "</p>");
+			out.println("<p> ISBN: " + p.getISBN() + "</p>");
+			out.println("<p> Title: " + p.getTitle() + "</p>");
+			out.println("<p> Details URL:<a href=' " + p.getDetailsURL() + "'>Purchase O	n Amazon</a></p>");
+
+			if (MySQLDataStoreUtilities.checkBookStatus(collegeId, ISBN) == null) {
+				out.println("<form class = 'submit-button' method='get' action='issueBookServlet'>");
+				out.println("<input type='hidden' name='collegeId' value='" + collegeId + "'>");
+				out.println("<input type='hidden' name='BookISBN' value='" + ISBN + "'>");
+				
+				out.println("<input class = 'submit-button' type = 'submit' name = 'Issue' value = 'Issue Book'>");
+				//out.println("<input  type='hidden' name='Issue' value='Issue Book'>");
+
+				out.println("</form>");
+			} else if (MySQLDataStoreUtilities.checkBookStatus(collegeId, ISBN)=="pending"){
+				out.println("<input type = 'submit' name = 'Issue' value = 'Pending'>");
+				
+			} else if(MySQLDataStoreUtilities.checkBookStatus(collegeId, ISBN)== "granted"){
+				out.println("<form class = 'submit-button' method='get' action='issueBookServlet'>");
+				out.println("<input class = 'submit-button' type = 'submit' name = 'Issue' value = 'Return'>");
+				//out.println("<input  type='hidden' name='Issue' value='Return'>");
+				out.println("</form>");
+			}
+
+			out.println("</div>");
+
+			out.println("</div>");
+			out.println("</div>");
 
 		}
 
-		out.println("</tbody>");
-
-		out.println("</table>");
-
-		out.println("<input type='submit'>");
 		out.println("</div>");
-		out.println("</div>");
-
-		out.println("</form>");
 
 		out.println(
 				"<script src='https://code.jquery.com/jquery-3.1.1.js' integrity='sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=' crossorigin='anonymous'>");
@@ -149,20 +215,5 @@ public class bookServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		String[] coursesids = request.getParameterValues("courseid");
-		String[] coursesNames = request.getParameterValues("coursename");
-		String studentid= request.getParameter("studentid");
-		// String[] courses= request.getParameterValues("course");
-
-		for (int i = 0; i < coursesids.length; i++) {
-			System.out.println(coursesids[i]);
-			System.out.println(coursesNames[i]);
-		}
-
-	}
 
 }

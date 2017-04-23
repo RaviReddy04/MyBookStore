@@ -117,10 +117,71 @@ public class HomeServlet extends HttpServlet {
 				out.println("<!-- /.container-fluid -->");
 				out.println("</nav>");
 
+				
+				
+				
+				
+				
+		out.println("<div class='container'>");
+				
+				out.println("<div class='col-lg-6'>");
+				out.println("<form name='autofillform' action='autocomplete'>");
+				out.println("<table border='0' cellpadding='10'>");
+				out.println("<tbody>");
+				out.println("<tr><td>");
+				out.println(
+						"<input type='text' class='form-control' placeholder='Search'  id='complete-field' onkeyup='doCompletion()'>");
+				out.println("</td>");
+				out.println("</tr>");
+				out.println("<tr>");
+				out.println("<td id='auto-row' colspan='2'>");
+
+				out.println("<table id='complete-table' class='popupBox' />");
+				out.println("</td>");
+				out.println("</tr>");
+				out.println("</tbody>");
+				out.println("</table>");
+				out.println("</form>");
+				out.println("<br><br><br><br><br><br>");
+				
+				out.println("</div>");
+				out.println("</div>");
+				
+				
 				out.println("<div class='container'>");
+				
 				out.println("<div class='col-lg-6'>");
 				
 				
+				if(u.getRole().equals("admin")){
+					
+					out.println("<div class='list-group'>");
+					out.println("<a href='AdminAddBookServlet' class='list-group-item active'>");
+					out.println("<h4 class='list-group-item-heading'>Add New Book</h4>");
+					out.println("<p class='list-group-item-text'>Admin Functionality to add Book</p>");
+					out.println("</a>");
+					out.println("</div>");
+					
+					out.println("<div class='list-group'>");
+					out.println("<a href='bookServlet' class='list-group-item active'>");
+					out.println("<h4 class='list-group-item-heading'>Search Books</h4>");
+					out.println("<p class='list-group-item-text'>Browse Books </p>");
+					out.println("</a>");
+					out.println("</div>");
+					
+					
+					out.println("<div class='list-group'>");
+					out.println("<a href='RegisterServlet' class='list-group-item active'>");
+					out.println("<h4 class='list-group-item-heading'>Register</h4>");
+					out.println("<p class='list-group-item-text'>Add a New User</p>");
+					out.println("</a>");
+					out.println("</div>");
+					
+					
+					
+				}
+				else if (u.getRole().equals("student") || u.getRole().equals("instructor")){
+					
 				out.println("<div class='list-group'>");
 				out.println("<a href='courseListServlet' class='list-group-item active'>");
 				out.println("<h4 class='list-group-item-heading'>All Courses</h4>");
@@ -136,9 +197,14 @@ public class HomeServlet extends HttpServlet {
 				out.println("</a>");
 				out.println("</div>");
 				
+				out.println("<div class='list-group'>");
+				out.println("<a href='bookServlet' class='list-group-item active'>");
+				out.println("<h4 class='list-group-item-heading'>Search Books</h4>");
+				out.println("<p class='list-group-item-text'>Browse Books </p>");
+				out.println("</a>");
+				out.println("</div>");
 				
-				
-				
+				}
 				
 				out.println("</div>");
 				out.println("</div>");

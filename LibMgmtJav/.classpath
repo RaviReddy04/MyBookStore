@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
-		<attributes>
-			<attribute name="owner.project.facets" value="java"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/Users/ravireddy/Downloads/commons-codec-1.10/commons-codec-1.10-javadoc.jar"/>
+	<classpathentry kind="lib" path="/Users/ravireddy/Downloads/commons-codec-1.10/commons-codec-1.10-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/ravireddy/Downloads/commons-codec-1.10/commons-codec-1.10-test-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/ravireddy/Downloads/commons-codec-1.10/commons-codec-1.10-tests.jar"/>
+	<classpathentry kind="lib" path="/Users/ravireddy/Downloads/commons-codec-1.10/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="/Users/ravireddy/Documents/workspace/LibMgmtJav 2BackUP/WebContent/WEB-INF/lib/mongo-java-driver-3.1.0-20150911.172057-81.jar"/>
+	<classpathentry kind="lib" path="/Users/ravireddy/Documents/workspace/LibMgmtJav 2BackUP/WebContent/WEB-INF/lib/mysql-connector-java-5.1.21-bin.jar"/>
+	<classpathentry kind="lib" path="/Users/ravireddy/Documents/workspace/LibMgmtJav 2BackUP/WebContent/WEB-INF/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/Users/ravireddy/Downloads/base64coder-2010-12-19.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

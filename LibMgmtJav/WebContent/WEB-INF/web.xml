@@ -75,4 +75,36 @@
   
   
   
+  <servlet>
+    <servlet-name>AdminAddBookServlet</servlet-name>
+    <servlet-class>AdminAddBookServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminAddBookServlet</servlet-name>
+    <url-pattern>/AdminAddBookServlet</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  <servlet>
+    <servlet-name>issueBookServlet</servlet-name>
+    <servlet-class>issueBookServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>issueBookServlet</servlet-name>
+    <url-pattern>/issueBookServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>AddBookToDatabase</servlet-name>
+    <servlet-class>AddBookToDatabase</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddBookToDatabase</servlet-name>
+    <url-pattern>/AddBookToDatabase</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  
 </web-app>

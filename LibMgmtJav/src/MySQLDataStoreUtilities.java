@@ -1,5 +1,4 @@
 import java.sql.DriverManager;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +22,103 @@ public class MySQLDataStoreUtilities {
 		}
 
 		return null;
+
+	}
+
+	public static String checkBookStatus(String collegeID, String BookISBN) {
+		
+		String present=null;
+		int count = 0;
+		try {
+			Connection connect = MySQLDataStoreUtilities.getConnection();
+			String userQuery = "SELECT status FROM issuedBooks WHERE ISBN=? AND collegeID=?  ;";
+			PreparedStatement pst = connect.prepareStatement(userQuery);
+			pst.setString(1, BookISBN);
+			pst.setString(2, collegeID);
+			ResultSet resultSet = pst.executeQuery();
+
+			while (resultSet.next()) {
+
+				 present = resultSet.getString("status");
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();// TODO: handle exception
+		}
+		// return false;;
+		System.out.println("Hello "+ present);
+		return present;
+	}
+
+	public static void insertIssuedBooks(String collegeID, String ISBN, String status) {
+
+		try {
+			Connection connect = MySQLDataStoreUtilities.getConnection();
+			String insertProductDetails = "INSERT INTO issuedBooks( collegeID,ISBN, status) " + "VALUES (?,?,?);";
+			PreparedStatement pst = connect.prepareStatement(insertProductDetails);
+			pst.setString(1, collegeID);
+			pst.setString(2, ISBN);
+			pst.setString(3, status);
+
+			pst.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void insertProductsDetails(String ASIN, String ISBN, String title, String imageURL, String publisher,
+			String publicationDate, String price, String productGroup, String detailsURL) {
+
+		try {
+			Connection connect = MySQLDataStoreUtilities.getConnection();
+			String insertProductDetails = "INSERT INTO productsLoad( ASIN,ISBN, title,  imageURL,  publisher, publicationDate, price,  productGroup, detailsURL) "
+					+ "VALUES (?,?,?,?,?,?,?,?,?);";
+			PreparedStatement pst = connect.prepareStatement(insertProductDetails);
+			pst.setString(1, ASIN);
+			pst.setString(2, ISBN);
+			pst.setString(3, title);
+			pst.setString(4, imageURL);
+			pst.setString(5, publisher);
+			pst.setString(6, publicationDate);
+			pst.setString(7, price);
+			pst.setString(8, productGroup);
+			pst.setString(9, detailsURL);
+			pst.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static List<products> productsListFetch() {
+		List<products> mylist = new ArrayList<>();
+
+		try {
+
+			Connection connect = MySQLDataStoreUtilities.getConnection();
+			String getUsersQuery = "SELECT ASIN, ISBN, title,  imageURL,  publisher, publicationDate, price,  productGroup, detailsURL FROM productsLoad;";
+			PreparedStatement pst = connect.prepareStatement(getUsersQuery);
+
+			ResultSet resultSet = pst.executeQuery();
+			while (resultSet.next()) {
+				products c = new products();
+				c.setASIN(resultSet.getString("ASIN"));
+				c.setISBN(resultSet.getString("ISBN"));
+				c.setTitle(resultSet.getString("title"));
+				c.setImageURL(resultSet.getString("imageURL"));
+				c.setPublisher(resultSet.getString("publisher"));
+				c.setPublicationDate(resultSet.getString("publicationDate"));
+				c.setPrice(resultSet.getString("price"));
+				c.setProductGroup(resultSet.getString("productGroup"));
+				c.setDetailsURL(resultSet.getString("detailsURL"));
+
+				mylist.add(c);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();// TODO: handle exception
+		}
+
+		return mylist;
 
 	}
 
@@ -68,17 +164,16 @@ public class MySQLDataStoreUtilities {
 		}
 	}
 
-	
 	public static int getEnrollCount(String collegeID) {
 
-		int count=0;
+		int count = 0;
 		try {
 			Connection connect = MySQLDataStoreUtilities.getConnection();
 			String userQuery = "SELECT * FROM enrollmentData WHERE collegeID=?;";
 			PreparedStatement pst = connect.prepareStatement(userQuery);
 			pst.setString(1, collegeID);
 			ResultSet resultSet = pst.executeQuery();
-			
+
 			while (resultSet.next()) {
 				++count;
 
@@ -88,11 +183,7 @@ public class MySQLDataStoreUtilities {
 		}
 		return count;
 	}
-	
-	
-	
-	
-	
+
 	public static Enroll getEnrollDetails(String collegeID) {
 		Enroll u = new Enroll();
 		try {
@@ -127,7 +218,7 @@ public class MySQLDataStoreUtilities {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static courseList getCourseDetails(String courseId) {
 		courseList u = new courseList();
 		try {
@@ -139,15 +230,14 @@ public class MySQLDataStoreUtilities {
 			while (resultSet.next()) {
 				u.setCourseId(courseId);
 				u.setCourseName(resultSet.getString("courseName"));
-				
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();// TODO: handle exception
 		}
 		return u;
 	}
-	
-	
+
 	public static List<Enroll> enrollCourseListFetch(String collegeID) {
 		List<Enroll> mylist = new ArrayList<>();
 
@@ -173,8 +263,6 @@ public class MySQLDataStoreUtilities {
 		return mylist;
 
 	}
-	
-	
 
 	public static User getSignInDetails(String collegeID) {
 		User u = new User();
